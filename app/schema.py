@@ -1,7 +1,6 @@
-import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from .models import Application as ApplicationModel
-from graphene import relay
+from graphene import relay, ObjectType, Schema
 
 
 class Application(SQLAlchemyObjectType):
@@ -10,9 +9,9 @@ class Application(SQLAlchemyObjectType):
         interfaces = (relay.Node,)
 
 
-class Query(graphene.ObjectType):
+class Query(ObjectType):
     node = relay.Node.Field()
     all_applications = SQLAlchemyConnectionField(Application)
 
 
-schema = graphene.Schema(query=Query)
+schema = Schema(query=Query)
